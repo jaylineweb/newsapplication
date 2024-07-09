@@ -1,7 +1,7 @@
 let news = []; // 'news'를 다른 함수에서도 쓸 수 있게 전역 변수로 선언해주기
 
 const getLatestNews = async () => {
-    const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
+    const url = new URL(`https://apisuccess.netlify.app/top-headlines`);
     const response = await fetch(url);
     const data = await response.json();
     news = data.articles; // 뉴스 기사들을 news 변수에 재할당
