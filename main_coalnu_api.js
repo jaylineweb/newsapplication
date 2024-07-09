@@ -1,7 +1,7 @@
 let news = []; // 'news'를 다른 함수에서도 쓸 수 있게 전역 변수로 선언해주기
 
 const getLatestNews = async () => {
-    const url = new URL(`https://apisuccess.netlify.app/top-headlines`);
+    const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr&pageSize=2`);
     const response = await fetch(url);
     const data = await response.json();
     news = data.articles; // 뉴스 기사들을 news 변수에 재할당
