@@ -7,7 +7,7 @@ const getLatestNews = async () => {
     news = data.articles; // 뉴스 기사들을 news 변수에 재할당
 
     const newsArea = document.getElementById('newsArea');
-    newsArea.innerHTML = ''; // 기존 내용을 초기화
+    document.getElementById('newsArea').innerHTML='';// 기존 내용을 초기화
 
     news.forEach(article => {
         const newsRow = document.createElement('div');
