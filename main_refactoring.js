@@ -56,6 +56,9 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
 function renderNews() {
     const newsHTML = newsList.map(news => {
         const publishedDate = new Date(news.publishedAt).toISOString().split('T')[0];
+        const description = news.description.length > 200 ? news.description.substring(0, 200) + '...' : news.description; //200자 이하로 줄이고 '...'으로 표기하기
+        const sourceName = news.source.name ? news.source.name : 'no source'; // 출처가 없을 경우 no source
+
         return `
             <div class="row news">
                 <div id="newsImg" class="col-lg-4">
@@ -63,8 +66,8 @@ function renderNews() {
                 </div>
                 <div class="newsText col-lg-8" onclick="location.href='${news.url}'">
                     <h2 class="newsTitle">${news.title}</h2>
-                    <p class="newsDescription">${news.description}</p>
-                    <div class="newsSource">${news.source.name} * ${publishedDate}</div>
+                    <p class="newsDescription">${description}</p>
+                    <div class="newsSource">${sourceName} * ${publishedDate}</div>
                 </div>
             </div>
         `;
