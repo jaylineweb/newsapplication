@@ -56,7 +56,7 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
 function renderNews() {
     const newsHTML = newsList.map(news => {
         const publishedDate = moment(news.publishedAt).fromNow();
-        const description = news.description ? (news.description.length > 200 ? news.description.substring(0, 200) + '...' : news.description) : 'No description available';
+        const description = news.description ? (news.description.length > 200 ? news.description.substring(0, 200) + '...' : news.description) : '내용 없음음';
         const sourceName = news.source.name || 'no source';
 
         return `
