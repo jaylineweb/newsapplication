@@ -1,4 +1,3 @@
-//최대한 간결하게 줄여보기
 let newsList = [];
 let searchContainer = document.querySelector(".search-container");
 let searchButton = document.querySelector(".search-button");
@@ -7,24 +6,16 @@ const menus = document.querySelectorAll('.menus button');
 let keyword = '';
 let navBar = document.querySelector('.menus-container');
 
-menus.forEach(menu => {
-    menu.addEventListener('click', event => {
-        fetchNews({ category: event.target.textContent.toLowerCase() });
-    });
-});
+menus.forEach(menu => menu.addEventListener('click', event => fetchNews({ category: event.target.textContent.toLowerCase() })));
 
 searchButton.addEventListener("click", setKeywords);
 
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 991) {
-        closeMenu();
-    }
+    if (window.innerWidth > 991) closeMenu();
 });
 
 inputArea.addEventListener('keydown', event => {
-    if (event.key === 'Enter') {
-        setKeywords();
-    }
+    if (event.key === 'Enter') setKeywords();
 });
 
 async function setKeywords() {
