@@ -41,7 +41,7 @@ async function setKeywords() {
     if (newsList.length === 0) {
         document.getElementById('news-board').innerHTML = `
             <div class="alert alert-danger" role="alert">
-                해당 기사가 존재하지 않습니다.
+                No result for this search.
             </div>
         `;
     }
@@ -53,6 +53,7 @@ function navBarActivate() {
 
 function searchIconActivate(){
     searchContainer.classList.toggle("active");
+    inputArea.focus();
 }
 
 function closeMenu() {
