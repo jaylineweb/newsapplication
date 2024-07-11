@@ -50,4 +50,5 @@ li{list-style-type:none;}
     .news{padding-right:1.5rem;padding-left:1.5rem;}
     .news-img-size{max-height:unset;}
     .newsTitle{margin-top:1.5rem;}
+    .menus button{width:calc((100% - 20px)/2);}
 }
