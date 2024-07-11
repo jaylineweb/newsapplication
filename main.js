@@ -34,7 +34,7 @@ async function setKeywords() {
     if (newsList.length === 0) {
         document.getElementById('news-board').innerHTML = `
             <div class="alert alert-danger" role="alert">
-                No result for this search.
+                해당 기사가 존재하지 않습니다.
             </div>
         `;
     }
