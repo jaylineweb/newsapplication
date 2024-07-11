@@ -78,6 +78,24 @@ const getNewsByCategory= async (event)=>{
     render();
 };
 
+const getNewsByKeyword = async () => {
+    const keywordValue = inputArea.value;
+    if (!keywordValue) {
+        alert("검색할 내용을 입력해주세요.");
+        return;
+    }
+    const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr&q=${keywordValue}`);
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        newsList = data.articles;
+        render();
+    } catch (error) {
+        console.error("Error fetching keyword data:", error);
+    }
+}
+
 const render = () => {
     const newsHTML = newsList.map((news) => {
         const publishedDate = new Date(news.publishedAt).toISOString().split('T')[0];
