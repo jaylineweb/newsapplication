@@ -22,6 +22,13 @@ window.addEventListener('resize', () => {
     }
 });
 
+//Enter키 누를 시
+inputArea.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        setKeywords();
+    }
+});
+
 async function setKeywords() {
     if (inputArea.value == "") {
         alert("검색할 내용을 입력해주세요.");
