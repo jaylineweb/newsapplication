@@ -66,7 +66,7 @@ li{list-style-type:none;}
 .menus-container{padding-top:60px;background-color:#fff;transition:left 0.3s ease-in-out;z-index:1000;}
 .menus-container.active{left:0;}
 .menus-container .close{display:none;}
-
+.search-button{padding:0.3rem;border:0;background-color:#333;color:#fff;}
 
 @media all and (max-width:1400px){
     .footer .footer_logo{line-height:calc(100vw * (93 / 1400));width:calc(100vw * (132 / 1400));}
@@ -96,7 +96,6 @@ li{list-style-type:none;}
     .menus button{width:100%;padding:1.2rem 0;color:#ebebeb;}
     .menus button + button{border-top:1px solid #ebebeb;}
     .menus button:hover{color:#000;}
-    .search-button{padding:0.3rem;border:0;background-color:#333;color:#fff;}
 }
 
 .alert-danger{text-align:center;}
