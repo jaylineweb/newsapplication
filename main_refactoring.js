@@ -6,7 +6,11 @@ const menus = document.querySelectorAll('.menus button');
 let keyword = '';
 let navBar = document.querySelector('.menus-container');
 
-menus.forEach(menu => menu.addEventListener('click', event => fetchNews({ category: event.target.textContent.toLowerCase() })));
+menus.forEach(menu => menu.addEventListener('click', event => {
+    setActiveButton(event.target); // active 클래스 설정
+    page = 1; // 페이지 번호를 초기화
+    fetchNews({ category: event.target.textContent.toLowerCase() });
+}));
 
 searchButton.addEventListener("click", setKeywords);
 
@@ -26,6 +30,7 @@ async function setKeywords() {
     }
     keyword = `&q=${inputArea.value.trim()}`;
     inputArea.value = "";
+    page = 1; // 페이지 번호를 초기화
     await fetchNews({ keyword });
 }
 
@@ -51,20 +56,21 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
     const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
     console.log('Request URL:', url.toString()); // URL을 콘솔에 출력하여 확인
     try {
-        url.searchParams.set('page',page); // => &page=page
-        url.searchParams.set('pageSize',pageSize);
+        url.searchParams.set('page', page); // => &page=page
+        url.searchParams.set('pageSize', pageSize);
 
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log('Received data:', data); // 응답 데이터 확인
         if (!data.articles.length) {
             throw new Error("검색 결과가 없습니다.");
         }
         newsList = data.articles;
         totalResults = data.totalResults;
-        console.log('ddddd',data);
+        console.log('Total Results:', totalResults); // 총 결과 수 확인
         renderNews();
         paginationRender();
     } catch (error) {
@@ -103,41 +109,34 @@ function renderError(message) {
     `;
 }
 
-const paginationRender=()=>{
-    //totalResult
-
-    //page
-    //pageSize
-    //groupSize
-    //totalPages
+const paginationRender = () => {
     const totalPages = Math.ceil(totalResults / pageSize);
-    //pageGroup
     const pageGroup = Math.ceil(page / groupSize);
-
-    //lastPage
     let lastPage = pageGroup * groupSize;
-    //마지막 페이지그룹이 그룹사이즈보다 작다? lastPage = totalPage
-    if(lastPage > totalPages){
-        lastPage = totalPages
+    if (lastPage > totalPages) {
+        lastPage = totalPages;
     }
-
-    //firstPage
-    const firstPage = lastPage - (groupSize - 1) <=0? 1:lastPage - (groupSize - 1);
-    //first~last
+    const firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
 
     let paginationHTML = ``;
-
-    for(let i=firstPage;i<=lastPage;i++){
-        paginationHTML+=`<li class="page-item ${i===page?"active":''}" onclick="moveToPage(${i})"><a class="page-link" href="#n">${i}</a></li>`;
+    for (let i = firstPage; i <= lastPage; i++) {
+        paginationHTML += `<li class="page-item ${i === page ? "active" : ''}" onclick="moveToPage(${i})"><a class="page-link" href="#n">${i}</a></li>`;
     }
 
     document.querySelector('.pagination').innerHTML = paginationHTML;
 }
 
-const moveToPage =(pageNum)=>{
-    console.log('moveToPage',pageNum);
+const moveToPage = async (pageNum) => {
+    console.log('moveToPage', pageNum);
     page = pageNum;
-    fetchNews();
+    await fetchNews();
+}
+
+function setActiveButton(clickedButton) {
+    menus.forEach(menu => {
+        menu.classList.remove('active');
+    });
+    clickedButton.classList.add('active');
 }
 
 // Moment.js를 로드하기 위한 스크립트 추가
