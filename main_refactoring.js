@@ -87,7 +87,7 @@ function renderNews() {
 // Moment.js를 로드하기 위한 스크립트 추가
 const script = document.createElement('script');
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js";
-script.onload = function() {
-    fetchNews(); // Moment.js 로드 후 fetchNews 호출
+script.onload = async function() {
+    await fetchNews(); // Moment.js 로드 후 fetchNews 호출
 };
 document.head.appendChild(script);
