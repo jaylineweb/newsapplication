@@ -93,7 +93,7 @@ li{list-style-type:none;}
     .menus-container .close{display:block;position:relative;width:30px;height:30px;outline:1px solid #000;}
     .menus-container .close:before{display:flex;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;justify-content:center;align-items:center;background-color:#ffffff;}
     .menus{display:block;border-bottom:1px solid #ebebeb;}
-    .menus button{width:100%;padding:1.2rem 0;color:#ebebeb;}
+    .menus button{width:100%;margin-right:0;margin-left:0;padding:1.2rem 0;color:#ebebeb;}
     .menus button + button{border-top:1px solid #ebebeb;}
     .menus button:hover{color:#000;}
 }
