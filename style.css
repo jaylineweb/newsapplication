@@ -63,6 +63,8 @@ li{list-style-type:none;}
 .search-container {display:none;}
 .search-container.active {display:inline;}
 
+.input-area{width:250px;}
+
 .menus-container{padding-top:60px;background-color:#fff;transition:left 0.3s ease-in-out;z-index:1000;}
 .menus-container.active{left:0;}
 .menus-container .close{display:none;}
