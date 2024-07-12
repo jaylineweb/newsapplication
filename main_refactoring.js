@@ -91,3 +91,11 @@ script.onload = async function() {
     await fetchNews(); // Moment.js 로드 후 fetchNews 호출
 };
 document.head.appendChild(script);
+
+async function getNewsByCategory(category) {
+    await fetchNews({ category });
+}
+
+async function getNewsByKeyword(keyword) {
+    await fetchNews({ keyword });
+}
