@@ -103,3 +103,9 @@ li{list-style-type:none;}
 }
 
 .alert-danger{border:none;background-color:#d5d5d5;text-align:center;color:#333;font-weight:600;}
+
+.pagination{justify-content:center;margin-top:16px;}
+.page-item:not(.active) .page-link{color:#333;}
+.page-item:not(.active) .page-link:hover{border:1px solid #333333;background-color:#333333;color:#ffffff;}
+.page-item.active .page-link{border:1px solid #333333;background-color:#333333;}
+.page-link:focus{box-shadow:unset;border:2px dashed #333333;}
