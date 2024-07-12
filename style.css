@@ -102,4 +102,4 @@ li{list-style-type:none;}
     .menus button:hover{color:#000;}
 }
 
-.alert-danger{background-color:#d5d5d5;text-align:center;color:#333;font-weight:600;}
+.alert-danger{border:none;background-color:#d5d5d5;text-align:center;color:#333;font-weight:600;}
