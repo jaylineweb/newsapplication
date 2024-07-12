@@ -8,7 +8,7 @@ let navBar = document.querySelector('.menus-container');
 
 menus.forEach(menu => menu.addEventListener('click', event => {
     setActiveButton(event.target); // active 클래스 설정
-    page = 1; // 페이지 번호를 초기화
+    page = 1; // 페이지 번호를 1로 초기화
     fetchNews({ category: event.target.textContent.toLowerCase() });
 }));
 
@@ -30,7 +30,7 @@ async function setKeywords() {
     }
     keyword = `&q=${inputArea.value.trim()}`;
     inputArea.value = "";
-    page = 1; // 페이지 번호를 초기화
+    page = 1; // 페이지 번호를 1로 초기화
     await fetchNews({ keyword });
 }
 
@@ -64,13 +64,12 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Received data:', data); // 응답 데이터 확인
         if (!data.articles.length) {
             throw new Error("검색 결과가 없습니다.");
         }
         newsList = data.articles;
         totalResults = data.totalResults;
-        console.log('Total Results:', totalResults); // 총 결과 수 확인
+        console.log('ddddd', data);
         renderNews();
         paginationRender();
     } catch (error) {
@@ -112,25 +111,43 @@ function renderError(message) {
 const paginationRender = () => {
     const totalPages = Math.ceil(totalResults / pageSize);
     const pageGroup = Math.ceil(page / groupSize);
-    let lastPage = pageGroup * groupSize;
-    if (lastPage > totalPages) {
-        lastPage = totalPages;
-    }
-    const firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
 
-    let paginationHTML = ``;
+    let lastPage = Math.min(pageGroup * groupSize, totalPages);
+    let firstPage = Math.max(lastPage - (groupSize - 1), 1);
+
+    let paginationHTML = '';
+
+    if (page > 1) {
+        paginationHTML += renderPaginationButton(1, 'First', 'fa-angles-left');
+        paginationHTML += renderPaginationButton(page - 1, 'Previous', 'fa-angle-left');
+    }
+
     for (let i = firstPage; i <= lastPage; i++) {
         paginationHTML += `<li class="page-item ${i === page ? "active" : ''}" onclick="moveToPage(${i})"><a class="page-link" href="#n">${i}</a></li>`;
     }
 
+    if (page < totalPages) {
+        paginationHTML += renderPaginationButton(page + 1, 'Next', 'fa-angle-right');
+        paginationHTML += renderPaginationButton(totalPages, 'Last', 'fa-angles-right');
+    }
+
     document.querySelector('.pagination').innerHTML = paginationHTML;
-}
+};
+
+const renderPaginationButton = (pageNum, label, iconClass) => {
+    return `
+        <li class="page-item" onclick='moveToPage(${pageNum})'>
+            <a class="page-link" aria-label="${label}">
+                <span aria-hidden="true"><i class="fa-solid ${iconClass}"></i></span>
+            </a>
+        </li>`;
+};
 
 const moveToPage = async (pageNum) => {
     console.log('moveToPage', pageNum);
     page = pageNum;
     await fetchNews();
-}
+};
 
 function setActiveButton(clickedButton) {
     menus.forEach(menu => {
