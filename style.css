@@ -26,7 +26,7 @@ li{list-style-type:none;}
 .menus button:hover{background-color:beige;}
 
 .icon-container {display:flex;justify-content:flex-start;align-items:center;padding:.5em;}
-.nav-bar-icon{/* display:none !important; */padding:1em .5em;transition:transform 0.2s ease-in-out;cursor:pointer;}
+.nav-bar-icon{display:none !important;padding:1em .5em;transition:transform 0.2s ease-in-out;cursor:pointer;}
 .nav-bar-icon:hover{transform:scale(1.15);}
 .search-icon{padding:1em .5em;cursor:pointer;transition:transform 0.2s ease-in-out;}
 .search-icon:hover{transform:scale(1.15);}
