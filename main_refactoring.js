@@ -11,7 +11,7 @@ menus.forEach(menu => menu.addEventListener('click', event => fetchNews({ catego
 searchButton.addEventListener("click", setKeywords);
 
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 991) closeMenu();
+    if (window.innerWidth > 991) closeMenu(); // mobile(991px) 변형 시(resizing) 사이드배너가 열린 상태로 view되는걸 방지
 });
 
 inputArea.addEventListener('keydown', event => {
@@ -21,7 +21,7 @@ inputArea.addEventListener('keydown', event => {
 async function setKeywords() {
     if (!inputArea.value.trim()) {
         alert("검색할 내용을 입력해주세요.");
-        inputArea.focus();
+        inputArea.focus(); // 값이 null일 시 focus
         return;
     }
     keyword = `&q=${inputArea.value.trim()}`;
@@ -29,18 +29,23 @@ async function setKeywords() {
     await fetchNews({ keyword });
 }
 
-function navBarActivate() {
+function navBarActivate() { // 햄버거 버튼 클릭 시 사이드 바 오픈
     navBar.classList.toggle('active');
 }
 
 function searchIconActivate() {
     searchContainer.classList.toggle("active");
-    inputArea.focus();
+    inputArea.focus(); // 값이 null일 시 focus
 }
 
-function closeMenu() {
+function closeMenu() {// 모바일 버전(991px) 사이드 배너 닫기 버튼
     navBar.classList.remove('active');
 }
+
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
 
 async function fetchNews({ category = '', keyword = '' } = {}) {
     const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
@@ -55,7 +60,10 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
             throw new Error("검색 결과가 없습니다.");
         }
         newsList = data.articles;
+        totalResults = data.totalResults;
+        console.log('ddddd',data);
         renderNews();
+        paginationRender();
     } catch (error) {
         console.error("Error fetching news data:", error);
         renderError(error.message);
@@ -92,6 +100,29 @@ function renderError(message) {
     `;
 }
 
+const paginationRender=()=>{
+    //totalResult
+
+    //page
+    //pageSize
+    //groupSize
+    //pageGroup
+    const pageGroup = Math.ceil(page / groupSize);
+    //lastPage
+    const lastPage = pageGroup * groupSize;
+    //firstPage
+    const firstPage = lastPage - (groupSize - 1);
+    //first~last
+
+    let paginationHTML = ``;
+
+    for(let i=firstPage;i<=lastPage;i++){
+        paginationHTML+=`<li class="page-item"><a class="page-link" href="#">${i}</a></li>`;
+    }
+
+    document.querySelector('.pagination').innerHTML = paginationHTML;
+}
+
 // Moment.js를 로드하기 위한 스크립트 추가
 const script = document.createElement('script');
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js";
@@ -101,9 +132,9 @@ script.onload = async function() {
 document.head.appendChild(script);
 
 async function getNewsByCategory(category) {
-    await fetchNews({ category });
+    await fetchNews({ category });//getNewsByCategory 함수 => 비동기 함수로 변형 후 await fetchNews를 사용
 }
 
 async function getNewsByKeyword(keyword) {
-    await fetchNews({ keyword });
+    await fetchNews({ keyword });//getNewsByKeyword 함수 => 비동기 함수로 변형 후 await fetchNews 사용
 }
