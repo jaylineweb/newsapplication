@@ -10,8 +10,8 @@ menus.forEach(menu => menu.addEventListener('click', event => fetchNews({ catego
 
 searchButton.addEventListener("click", setKeywords);
 
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 991) closeMenu(); // mobile(991px) 변형 시(resizing) 사이드배너가 열린 상태로 view되는걸 방지
+window.addEventListener('resize', () => { // mobile(991px) 변형 시(resizing) 사이드배너가 열린 상태로 view되는걸 방지
+    if (window.innerWidth > 991) closeMenu();
 });
 
 inputArea.addEventListener('keydown', event => {
@@ -51,10 +51,14 @@ async function fetchNews({ category = '', keyword = '' } = {}) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        if (!data.articles.length) {
+            throw new Error("검색 결과가 없습니다.");
+        }
         newsList = data.articles;
         renderNews();
     } catch (error) {
         console.error("Error fetching news data:", error);
+        alert(error.message); // 사용자에게 에러 메시지 표시
     }
 }
 
