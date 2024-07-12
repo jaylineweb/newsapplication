@@ -106,9 +106,12 @@ function renderError(message) {
             ${message}
         </div>
     `;
+    document.querySelector('.pagination').innerHTML = ''; // 페이지네이션 비우기
 }
 
 const paginationRender = () => {
+    if (totalResults === 0) return; // 검색 결과가 없을 때 페이지네이션을 출력하지 않음
+
     const totalPages = Math.ceil(totalResults / pageSize);
     const pageGroup = Math.ceil(page / groupSize);
 
@@ -155,7 +158,6 @@ function setActiveButton(clickedButton) {
     });
     clickedButton.classList.add('active');
 }
-
 // Moment.js를 로드하기 위한 스크립트 추가
 const script = document.createElement('script');
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js";
