@@ -21,6 +21,7 @@ inputArea.addEventListener('keydown', event => {
 async function setKeywords() {
     if (!inputArea.value.trim()) {
         alert("검색할 내용을 입력해주세요.");
+        inputArea.focus();
         return;
     }
     keyword = `&q=${inputArea.value.trim()}`;
@@ -43,8 +44,12 @@ function closeMenu() {
 
 async function fetchNews({ category = '', keyword = '' } = {}) {
     const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
+    console.log('Request URL:', url.toString()); // URL을 콘솔에 출력하여 확인
     try {
         const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
         newsList = data.articles;
         renderNews();
