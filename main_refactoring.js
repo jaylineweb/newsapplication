@@ -11,17 +11,17 @@ menus.forEach(menu => menu.addEventListener('click', event => fetchNews({ catego
 searchButton.addEventListener("click", setKeywords);
 
 window.addEventListener('resize', () => {
-    if (window.innerWidth > 991) closeMenu();
+    if (window.innerWidth > 991) closeMenu(); // mobile(991px) 변형 시(resizing) 사이드배너가 열린 상태로 view되는걸 방지
 });
 
 inputArea.addEventListener('keydown', event => {
     if (event.key === 'Enter') setKeywords();
 });
 
-async function setKeywords() {
+async function setKeywords() { // 키워드 셋팅
     if (!inputArea.value.trim()) {
         alert("검색할 내용을 입력해주세요.");
-        inputArea.focus();
+        inputArea.focus(); // 값이 null일 시 focus 
         return;
     }
     keyword = `&q=${inputArea.value.trim()}`;
@@ -29,16 +29,16 @@ async function setKeywords() {
     await fetchNews({ keyword });
 }
 
-function navBarActivate() {
+function navBarActivate() { // 햄버거 버튼 클릭 시 사이드 바 오픈
     navBar.classList.toggle('active');
 }
 
 function searchIconActivate() {
     searchContainer.classList.toggle("active");
-    inputArea.focus();
+    inputArea.focus(); // 값이 null일 시 focus
 }
 
-function closeMenu() {
+function closeMenu() { // 모바일 버전(991px) 사이드 배너 닫기 버튼
     navBar.classList.remove('active');
 }
 
@@ -93,9 +93,9 @@ script.onload = async function() {
 document.head.appendChild(script);
 
 async function getNewsByCategory(category) {
-    await fetchNews({ category });
+    await fetchNews({ category });//getNewsByCategory 함수 => 비동기 함수로 변형 후 await fetchNews를 사용
 }
 
 async function getNewsByKeyword(keyword) {
-    await fetchNews({ keyword });
+    await fetchNews({ keyword });//getNewsByKeyword 함수 => 비동기 함수로 변형 후 await fetchNews 사용
 }
