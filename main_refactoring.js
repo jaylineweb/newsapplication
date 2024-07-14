@@ -115,8 +115,14 @@ const paginationRender = () => {
     const totalPages = Math.ceil(totalResults / pageSize);
     const pageGroup = Math.ceil(page / groupSize);
 
-    let lastPage = Math.min(pageGroup * groupSize, totalPages);
-    let firstPage = Math.max(lastPage - (groupSize - 1), 1);
+    let lastPage = pageGroup * groupSize;
+    if (lastPage > totalPages) {
+        lastPage = totalPages;
+    }
+    let firstPage = lastPage - (groupSize - 1);
+    if (firstPage <= 0) {
+        firstPage = 1;
+    }
 
     let paginationHTML = '';
 
