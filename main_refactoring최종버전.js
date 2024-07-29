@@ -53,7 +53,9 @@ const pageSize = 10;
 const groupSize = 5;
 
 async function fetchNews({ category = '', keyword = '' } = {}) {
-    const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
+    //const url = new URL(`https://apisuccess.netlify.app/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
+    //새로운 api주소: https://noona-times-be-5ca9402f90d9.herokuapp.com
+    const url = new URL(`https://noona-times-be-5ca9402f90d9.herokuapp.com/top-headlines?country=kr${category ? `&category=${category}` : ''}${keyword}`);
     console.log('Request URL:', url.toString()); // URL을 콘솔에 출력하여 확인
     try {
         url.searchParams.set('page', page); // => &page=page
